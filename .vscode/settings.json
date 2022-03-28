@@ -1,0 +1,44 @@
+{
+    // SAVE EVENTS
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+
+    // SPELLING
+    "cSpell.words": [
+        "firestore",
+        "grey",
+        "npsso",
+        "prefs",
+        "RGBO",
+        "rosterplanner"
+    ],
+    "cSpell.language": "en,de-de",
+
+    "cSpell.enableFiletypes": [
+      "!yaml",
+      "dart"
+    ],
+
+    // FOLDER/FILE VISIBILITY
+    "files.exclude": {
+        // FOLDERS
+        "**/.dart_tool": true,
+        "**/android": true,
+        "**/build": true,
+
+        // FILES
+        "**/.metadata": true,
+        "**/.packages": true,
+        "**/*.iml": true,
+        "**/*.lock": true,
+        "**/.flutter-plugins": true,
+        "**/.flutter-plugins-dependencies": true,
+
+        // PROJECT CONFIG FILES
+        "**/.editorconfig": true,
+        "**/.gitignore": true,
+        "**/analysis_options.yaml": true,
+    }
+}

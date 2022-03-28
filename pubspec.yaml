@@ -1,0 +1,30 @@
+name: roster_planner
+description: Project to improve the workers roster workflow.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase dependencies
+  cloud_firestore: ^3.1.9
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.8
+  firebase_analytics: ^9.1.2
+  firebase_messaging: ^11.2.7
+
+  overlay_support: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true

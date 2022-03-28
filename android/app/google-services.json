@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "635548498578",
+    "project_id": "roster-planner",
+    "storage_bucket": "roster-planner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635548498578:android:74207f01d53f7a6ee9844b",
+        "android_client_info": {
+          "package_name": "com.example.rosterplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635548498578-vfjvbntn2qisaolitqnvkb8bjli2810k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rosterplanner",
+            "certificate_hash": "5d3742702a5c2cd5cafc4d4f3e220c96363e9f3f"
+          }
+        },
+        {
+          "client_id": "635548498578-17lfmja1urgu5a48tmohkjmjhbk7p7u4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6VhWLjc5ymxyQ5xQt_jN7FhuFZbb3bqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635548498578-17lfmja1urgu5a48tmohkjmjhbk7p7u4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
