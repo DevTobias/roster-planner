@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 import '../components/layouts/default_layout.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required String uid})
+      : _uid = uid,
+        super(key: key);
+
+  // The uid of the user
+  final String _uid;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -41,11 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Safe an device [token] from firebase messing
   Future<void> _saveDeviceToken(String token) async {
-    const String uid = 'firebase42';
-
     // Create a unique token document for the authenticated user
-    final DocumentReference<Map<String, dynamic>> tokens =
-        _db.collection('users').doc(uid).collection('tokens').doc(token);
+    final DocumentReference<Map<String, dynamic>> tokens = _db
+        .collection('users')
+        .doc(widget._uid)
+        .collection('tokens')
+        .doc(token);
 
     // Safe the token with some corresponding meta data
     final Map<String, Object> tokenData = <String, Object>{

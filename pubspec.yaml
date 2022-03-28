@@ -19,7 +19,10 @@ dependencies:
   firebase_analytics: ^9.1.2
   firebase_messaging: ^11.2.7
 
-  overlay_support: ^1.2.1
+  splashscreen:
+    git:
+      url: https://github.com/DPLYR-dev/SplashScreenFlutterPackage.git
+      ref: master
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +31,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/logo.png

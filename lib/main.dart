@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app.dart';
-import 'screens/home_screen.dart';
+import 'screens/intro_screen.dart';
 
 Future<void> main() async {
   await _initializeApp();
 
   runApp(const App(
     title: 'Kita Dienstpläne',
-    initialWidget: HomeScreen(),
+    initialWidget: IntroScreen(),
   ));
 }
 
