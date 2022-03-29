@@ -40,6 +40,7 @@ const RegisterForm: FunctionComponent = () => {
     const { hours, position, username } = values;
 
     const email = generateEmail(username);
+    const [firstName, lastName] = username.split(' ');
 
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -52,6 +53,8 @@ const RegisterForm: FunctionComponent = () => {
         hours,
         position,
         email,
+        firstName,
+        lastName,
       });
 
       toast.success('Mitarbeiter erfolgreich registriert.');
@@ -62,7 +65,7 @@ const RegisterForm: FunctionComponent = () => {
 
   return (
     <Form autoComplete="off" layout="inline" onFinish={onFinish}>
-      <Form.Item name="username">
+      <Form.Item name="username" className="w-48">
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Name"
@@ -76,7 +79,7 @@ const RegisterForm: FunctionComponent = () => {
         />
       </Form.Item>
 
-      <Form.Item name="position" className="w-36">
+      <Form.Item name="position" className="w-48">
         <Input
           prefix={<AimOutlined className="site-form-item-icon" />}
           placeholder="Position"

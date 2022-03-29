@@ -28,19 +28,34 @@ type User = {
   email: string;
   hours: string;
   position: string;
+  firstName: string;
+  lastName: string;
 };
 
 type IndexProps = {
   users: User[];
 };
 
+const compareString = (a: string, b: string) =>
+  a > b ? '1' : a === b ? '0' : '-1';
+
 const Index: NextPage<IndexProps> = ({ users }) => {
   const cols = [
     {
-      title: 'UID',
-      dataIndex: 'key',
-      width: '20%',
-      editable: false,
+      title: 'Name',
+      dataIndex: 'firstName',
+      width: '10%',
+      editable: true,
+      defaultSortOrder: 'ascend',
+      sorter: (a: User, b: User) => compareString(a.firstName, b.firstName),
+    },
+    {
+      title: 'Nachname',
+      dataIndex: 'lastName',
+      width: '10%',
+      editable: true,
+      defaultSortOrder: 'ascend',
+      sorter: (a: User, b: User) => compareString(a.lastName, b.lastName),
     },
     {
       title: 'Email',
@@ -48,8 +63,7 @@ const Index: NextPage<IndexProps> = ({ users }) => {
       width: '20%',
       editable: true,
       defaultSortOrder: 'ascend',
-      sorter: (a: User, b: User) =>
-        a.email > b.email ? '1' : a.email === b.email ? '0' : '-1',
+      sorter: (a: User, b: User) => compareString(a.email, b.email),
     },
     {
       title: 'Stunden',
@@ -63,8 +77,7 @@ const Index: NextPage<IndexProps> = ({ users }) => {
       dataIndex: 'position',
       width: '15%',
       editable: true,
-      sorter: (a: User, b: User) =>
-        a.position > b.position ? '1' : a.position === b.position ? '0' : '-1',
+      sorter: (a: User, b: User) => compareString(a.position, b.position),
     },
   ];
 
