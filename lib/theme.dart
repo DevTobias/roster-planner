@@ -9,6 +9,7 @@ ThemeData getDarkTheme(BuildContext context) {
     primaryColor: cPrimaryColor,
     canvasColor: cDarkBackgroundColor,
     backgroundColor: cDarkBackgroundColor,
+    dialogBackgroundColor: cDarkDialogColor,
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Palette.darkPrimary,
       brightness: Brightness.dark,
@@ -38,6 +39,7 @@ ThemeData getLightTheme(BuildContext ctx) {
     primaryColor: cPrimaryColor,
     canvasColor: cLightBackgroundColor,
     backgroundColor: cLightBackgroundColor,
+    dialogBackgroundColor: cLightDialogColor,
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Palette.lightPrimary,
       backgroundColor: Colors.grey.withOpacity(0.2),

@@ -40,6 +40,9 @@ const Color cAccentColor = Color.fromRGBO(255, 169, 146, 1);
 const Color cDarkBackgroundColor = Color.fromRGBO(55, 56, 86, 1);
 const Color cLightBackgroundColor = Color.fromRGBO(255, 255, 255, 1);
 
+const Color cDarkDialogColor = Color.fromARGB(255, 43, 43, 66);
+const Color cLightDialogColor = Color.fromARGB(255, 231, 227, 227);
+
 const Color cDarkContentColor = Colors.white;
 const Color cLightContentColor = Color.fromRGBO(55, 56, 86, 1);
 

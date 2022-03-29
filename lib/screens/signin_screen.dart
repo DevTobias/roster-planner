@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/layouts/default_layout.dart';
+import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -12,10 +14,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  bool isLoading = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: Theme.of(context).textTheme.headline6),
                   const SizedBox(height: 30),
                   TextFormField(
-                    controller: emailController,
+                    controller: _emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email Address',
                       border: OutlineInputBorder(
@@ -55,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 20),
                   TextFormField(
                     obscureText: true,
-                    controller: passwordController,
+                    controller: _passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Password',
                       border: OutlineInputBorder(
@@ -71,10 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          // logInToFb();
+                          logIn();
                         }
                       },
                       child: const Text('Einloggen'),
@@ -89,6 +86,40 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  /// Uses the values of the input fields to login in with email password provider
+  /// from firebase.
+  Future<void> logIn() async {
+    try {
+      final UserCredential result =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (!mounted) {
+        return;
+      }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<Widget>(
+          builder: (BuildContext context) => HomeScreen(uid: result.user!.uid),
+        ),
+      );
+    } on FirebaseAuthException {
+      final SnackBar snackBar = SnackBar(
+        content: Text('Kein Benutzer mit diesen Daten gefunden.',
+            style: Theme.of(context).textTheme.bodyText1),
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        behavior: SnackBarBehavior.floating,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  /// Validate if the [value] is a valid email or not. If an error occurred,
+  /// a error message as string is returned, null instead.
   String? _validateEmail(String? value) {
     if (value!.isEmpty) {
       return 'Bitte eine Email eingeben!';
@@ -103,6 +134,8 @@ class _SignInScreenState extends State<SignInScreen> {
     return null;
   }
 
+  /// Validate if the [value] is a valid password or not. If an error occurred,
+  /// a error message as string is returned, null instead.
   String? _validatePassword(String? value) {
     if (value!.isEmpty) {
       return 'Bitte ein Passwort eingeben!';
