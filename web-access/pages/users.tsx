@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { collection, getDocs } from 'firebase/firestore';
 import { doc, updateDoc } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 import { firestore } from '@Lib/firebase';
 import Title from '@Helpers/Title';
@@ -61,14 +62,19 @@ const Index: NextPage<IndexProps> = ({ users }) => {
     },
   ];
 
-  const updateUser = (user: User) => {
+  const updateUser = async (user: User) => {
     const { key, email, hours, position } = user;
 
-    updateDoc(doc(firestore, 'user', key), {
-      email,
-      position,
-      hours,
-    });
+    try {
+      await updateDoc(doc(firestore, 'user', key), {
+        email,
+        position,
+        hours,
+      });
+      toast.error('Mitarbeiterdaten konnten nicht gespeichert werden.');
+    } catch (e) {
+      toast.success('Mitarbeiterdaten erfolgreich aktualisiert.');
+    }
   };
 
   return (
@@ -76,7 +82,7 @@ const Index: NextPage<IndexProps> = ({ users }) => {
       <Title title="Nutzerverwaltung" />
 
       <Container>
-        <main className="p-5 min-h-screenInner w-full space-y-7">
+        <main className="px-5 py-20 min-h-screenInner w-full space-y-7">
           <div>
             <h2 className="text-neutral-800 font-semibold text-header3m">
               Neuen Mitarbeiter hinzufügen

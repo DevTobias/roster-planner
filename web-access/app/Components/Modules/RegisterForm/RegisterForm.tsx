@@ -7,6 +7,7 @@ import { Button, Form, Input } from 'antd';
 import { FunctionComponent } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 import { firestore, auth } from '@Lib/firebase';
 
@@ -40,17 +41,23 @@ const RegisterForm: FunctionComponent = () => {
 
     const email = generateEmail(username);
 
-    const { user } = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      generatePassword(username)
-    );
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        generatePassword(username)
+      );
 
-    setDoc(doc(firestore, 'user', user.uid), {
-      hours,
-      position,
-      email,
-    });
+      await setDoc(doc(firestore, 'user', user.uid), {
+        hours,
+        position,
+        email,
+      });
+
+      toast.success('Mitarbeiter erfolgreich registriert.');
+    } catch (e) {
+      toast.error('Mitarbeiter konnte nicht registriert werden.');
+    }
   };
 
   return (
