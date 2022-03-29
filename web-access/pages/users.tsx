@@ -47,18 +47,24 @@ const Index: NextPage<IndexProps> = ({ users }) => {
       dataIndex: 'email',
       width: '20%',
       editable: true,
+      defaultSortOrder: 'ascend',
+      sorter: (a: User, b: User) =>
+        a.email > b.email ? '1' : a.email === b.email ? '0' : '-1',
     },
     {
       title: 'Stunden',
       dataIndex: 'hours',
       width: '20%',
       editable: true,
+      sorter: (a: User, b: User) => parseFloat(a.hours) - parseFloat(b.hours),
     },
     {
       title: 'Position',
       dataIndex: 'position',
       width: '20%',
       editable: true,
+      sorter: (a: User, b: User) =>
+        a.position > b.position ? '1' : a.position === b.position ? '0' : '-1',
     },
   ];
 
@@ -71,9 +77,9 @@ const Index: NextPage<IndexProps> = ({ users }) => {
         position,
         hours,
       });
-      toast.error('Mitarbeiterdaten konnten nicht gespeichert werden.');
-    } catch (e) {
       toast.success('Mitarbeiterdaten erfolgreich aktualisiert.');
+    } catch (e) {
+      toast.error('Mitarbeiterdaten konnten nicht gespeichert werden.');
     }
   };
 
