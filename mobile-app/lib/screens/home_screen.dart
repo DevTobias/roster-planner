@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +37,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       extendBody: true,
       body: DefaultLayout(
-        child: Text('Test'),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 20),
+            CalendarTimeline(
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now().subtract(const Duration(days: 14)),
+              lastDate: DateTime.now().add(const Duration(days: 365)),
+              onDateSelected: (DateTime? date) => _handleDateSelect(date!),
+              leftMargin: 20,
+              activeDayColor: Colors.white,
+              monthColor: Theme.of(context).textTheme.headline6!.color,
+              locale: 'de',
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  void _handleDateSelect(DateTime date) {}
 
   /// Safe an device [token] from firebase messing
   Future<void> _saveDeviceToken(String token) async {

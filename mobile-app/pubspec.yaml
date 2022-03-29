@@ -19,6 +19,8 @@ dependencies:
   firebase_analytics: ^9.1.2
   firebase_messaging: ^11.2.7
 
+  # UI dependencies
+  calendar_timeline: ^1.0.4
   splashscreen:
     git:
       url: https://github.com/DPLYR-dev/SplashScreenFlutterPackage.git

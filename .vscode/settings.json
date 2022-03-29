@@ -41,5 +41,14 @@
         "**/.editorconfig": true,
         "**/.gitignore": true,
         "**/analysis_options.yaml": true,
+
+        // FUNCTIONS
+        "**/.eslintrc.js": true,
+        "**/package-lock.json": true,
+        "**/tsconfig.*": true,
+        "**/.firebase*": true,
+        "**/firebase*": true,
+        "**/node_modules*": true,
+        "functions/lib": true,
     }
 }

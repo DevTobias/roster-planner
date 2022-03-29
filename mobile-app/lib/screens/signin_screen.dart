@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          logIn();
+                          _logIn();
                         }
                       },
                       child: const Text('Einloggen'),
@@ -88,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   /// Uses the values of the input fields to login in with email password provider
   /// from firebase.
-  Future<void> logIn() async {
+  Future<void> _logIn() async {
     try {
       final UserCredential result =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
