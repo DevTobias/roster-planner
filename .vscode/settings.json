@@ -50,5 +50,24 @@
         "**/firebase*": true,
         "**/node_modules*": true,
         "functions/lib": true,
+
+        // WEB
+
+        "**/node_modules/": true,
+        "**/.next/": true,
+        "**/.husky/": true,
+
+        // FILES
+        "**/yarn.lock": true,
+        "**/next-env.d.ts": true,
+        "**/next-sitemap.js": true,
+
+        // PROJECT CONFIG FILES
+        "**/next.config.js": true,
+        "**/tsconfig.json": true,
+        "**/postcss.config.js": true,
+        "**/stylelint.config.js": true,
+        "**/jest.config.js": true,
+        "**/jest.setup.ts": true,
     }
 }

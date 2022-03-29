@@ -1,0 +1,16 @@
+{
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "mobile",
+          "commands": ["cd mobile-app", "clear"]
+        },
+        {
+          "name": "web",
+          "commands": ["cd web-access", "clear"]
+        }
+      ]
+    }
+  ]
+}
