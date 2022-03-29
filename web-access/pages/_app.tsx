@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import innerVh from '@Utils/innerVh';
 
 import '@Styles/base.scss';
+import 'antd/dist/antd.css';
 
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => innerVh(), []);

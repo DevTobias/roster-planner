@@ -48,11 +48,13 @@ module.exports = {
       body4: ['15px', { lineHeight: '24px', letterSpacing: '0.01em' }],
       body5: ['13px', { lineHeight: '22px', letterSpacing: '0.01em' }],
     },
-    height: {
-      screen: 'calc(var(--innerVh, 1vh) * 100)',
-    },
-    minHeight: {
-      screen: 'calc(var(--innerVh, 1vh) * 100)',
+    extend: {
+      height: {
+        screenInner: 'calc(var(--innerVh, 1vh) * 100)',
+      },
+      minHeight: {
+        screenInner: 'calc(var(--innerVh, 1vh) * 100)',
+      },
     },
   },
   plugins: [],
