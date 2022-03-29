@@ -1,0 +1,73 @@
+{
+    // SAVE EVENTS
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+
+    // SPELLING
+    "cSpell.words": [
+        "firestore",
+        "grey",
+        "npsso",
+        "prefs",
+        "RGBO",
+        "rosterplanner",
+        "signin"
+    ],
+    "cSpell.language": "en,de-de",
+
+    "cSpell.enableFiletypes": [
+      "!yaml",
+      "dart"
+    ],
+
+    // FOLDER/FILE VISIBILITY
+    "files.exclude": {
+        // FOLDERS
+        "**/.dart_tool": true,
+        "**/android": true,
+        "**/build": true,
+
+        // FILES
+        "**/.metadata": true,
+        "**/.packages": true,
+        "**/*.iml": true,
+        "**/*.lock": true,
+        "**/.flutter-plugins": true,
+        "**/.flutter-plugins-dependencies": true,
+
+        // PROJECT CONFIG FILES
+        "**/.editorconfig": true,
+        "**/.gitignore": true,
+        "**/analysis_options.yaml": true,
+
+        // FUNCTIONS
+        "**/.eslintrc.js": true,
+        "**/package-lock.json": true,
+        "**/tsconfig.*": true,
+        "**/.firebaserc*": true,
+        "**/firebase.json*": true,
+        "**/node_modules*": true,
+        "functions/lib": true,
+
+        // WEB
+
+        "**/node_modules/": true,
+        "**/.next/": true,
+        "**/.husky/": true,
+
+        // FILES
+        "**/yarn.lock": true,
+        "**/next-env.d.ts": true,
+        "**/next-sitemap.js": true,
+
+        // PROJECT CONFIG FILES
+        "**/next.config.js": true,
+        "**/tsconfig.json": true,
+        "**/postcss.config.js": true,
+        "**/stylelint.config.js": true,
+        "**/jest.config.js": true,
+        "**/jest.setup.ts": true,
+    }
+}
