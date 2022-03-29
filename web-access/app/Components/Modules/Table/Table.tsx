@@ -1,6 +1,11 @@
-import { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Table, Input, InputNumber, Form, Button } from 'antd';
-import { CloseOutlined, EditFilled, SaveFilled } from '@ant-design/icons';
+import {
+  CloseOutlined,
+  EditFilled,
+  SaveFilled,
+  DeleteFilled,
+} from '@ant-design/icons';
 
 import { BaseData, EditableTableProps, EditableCellProps } from './Table.types';
 
@@ -38,6 +43,7 @@ const EditableTable = <T extends BaseData>({
   originData,
   columns: originColumns,
   updateCallback,
+  deleteCallback,
 }: EditableTableProps<T>) => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
@@ -88,6 +94,23 @@ const EditableTable = <T extends BaseData>({
     }
   };
 
+  /**
+   * Saves the item with the given key.
+   */
+  const deleteItem = async (key: string) => {
+    // Make a copy of the data and find the edited row
+    const newData = [...data];
+    const index = newData.findIndex((item) => key === item.key);
+
+    // Delete the user from the array
+    newData.splice(index, 1);
+
+    deleteCallback(key);
+
+    // Safe the new data in state to render it
+    setData(newData);
+  };
+
   const columns = [
     ...originColumns.map((col) => {
       if (!col.editable) {
@@ -124,12 +147,20 @@ const EditableTable = <T extends BaseData>({
             />
           </span>
         ) : (
-          <Button
-            style={{ border: 'none' }}
-            shape="circle"
-            icon={<EditFilled />}
-            onClick={() => edit(record)}
-          />
+          <span className="space-x-2">
+            <Button
+              style={{ border: 'none' }}
+              shape="circle"
+              icon={<EditFilled />}
+              onClick={() => edit(record)}
+            />
+            <Button
+              style={{ border: 'none' }}
+              shape="circle"
+              icon={<DeleteFilled />}
+              onClick={() => deleteItem(record.key)}
+            />
+          </span>
         );
       },
     },

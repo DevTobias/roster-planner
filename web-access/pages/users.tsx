@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { collection, getDocs } from 'firebase/firestore';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 import { firestore } from '@Lib/firebase';
@@ -83,12 +83,21 @@ const Index: NextPage<IndexProps> = ({ users }) => {
     }
   };
 
+  const deleteUser = async (key: string) => {
+    try {
+      await deleteDoc(doc(firestore, 'user', key));
+      toast.success('Mitarbeiter erfolgreich entfernt.');
+    } catch (e) {
+      toast.error('Mitarbeiter konnte nicht entfernt werden.');
+    }
+  };
+
   return (
     <>
       <Title title="Nutzerverwaltung" />
 
       <Container>
-        <main className="px-5 py-20 min-h-screenInner w-full space-y-7">
+        <main className="px-5 py-20 min-h-screenInner w-full space-y-7 flexable justify-center">
           <div>
             <h2 className="text-neutral-800 font-semibold text-header3m">
               Neuen Mitarbeiter hinzufügen
@@ -103,6 +112,7 @@ const Index: NextPage<IndexProps> = ({ users }) => {
               originData={users}
               columns={cols}
               updateCallback={updateUser}
+              deleteCallback={deleteUser}
             />
           </div>
         </main>

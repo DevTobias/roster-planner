@@ -11,6 +11,7 @@ export interface EditableTableProps<T> {
     editable: boolean;
   }[];
   updateCallback: (item: T) => void;
+  deleteCallback: (key: string) => void;
 }
 
 export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
