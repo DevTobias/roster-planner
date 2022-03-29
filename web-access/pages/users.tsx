@@ -54,14 +54,14 @@ const Index: NextPage<IndexProps> = ({ users }) => {
     {
       title: 'Stunden',
       dataIndex: 'hours',
-      width: '20%',
+      width: '10%',
       editable: true,
       sorter: (a: User, b: User) => parseFloat(a.hours) - parseFloat(b.hours),
     },
     {
       title: 'Position',
       dataIndex: 'position',
-      width: '20%',
+      width: '15%',
       editable: true,
       sorter: (a: User, b: User) =>
         a.position > b.position ? '1' : a.position === b.position ? '0' : '-1',

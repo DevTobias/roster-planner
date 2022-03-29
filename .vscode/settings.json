@@ -43,11 +43,11 @@
         "**/analysis_options.yaml": true,
 
         // FUNCTIONS
-        "**/.eslintrc.js": true,
+        //"**/.eslintrc.js": true,
         "**/package-lock.json": true,
         "**/tsconfig.*": true,
-        "**/.firebase*": true,
-        "**/firebase*": true,
+        "**/.firebaserc*": true,
+        "**/firebase.json*": true,
         "**/node_modules*": true,
         "functions/lib": true,
 
