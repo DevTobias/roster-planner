@@ -12,7 +12,8 @@
         "npsso",
         "prefs",
         "RGBO",
-        "rosterplanner"
+        "rosterplanner",
+        "signin"
     ],
     "cSpell.language": "en,de-de",
 

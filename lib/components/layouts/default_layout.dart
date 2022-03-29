@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class DefaultLayout extends StatelessWidget {
   /// Safe area Layout with optional body [padding].
   const DefaultLayout({
@@ -18,14 +20,21 @@ class DefaultLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: _padding,
-            vertical: _padding,
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: Theme.of(context).brightness == Brightness.dark
+                ? cDarkBackgroundGradient
+                : cLightBackgroundGradient,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(_padding),
           child: _child,
         ),
       ),
