@@ -2,15 +2,15 @@ import { FunctionComponent } from 'preact';
 import { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import Router from 'next/router';
+//import { useAuthState } from 'react-firebase-hooks/auth';
+//import Router from 'next/router';
 
 import { signIn, Credentials } from '@Lib/firebaseClient';
-import { auth } from '@Lib/firebase';
+//import { auth } from '@Lib/firebase';
 
 const HomeTemplate: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
-  const [user] = useAuthState(auth);
+  //const [user] = useAuthState(auth);
   /**
    * Sign in the user with the provided credentials. Redirect the user
    * to the employees page, if sign in was successful.
@@ -24,9 +24,9 @@ const HomeTemplate: FunctionComponent = () => {
   };
 
   // If the user is signed in, redirect him to the employee page
-  if (user) {
+  /*if (user) {
     Router.push('/employees');
-  }
+  }*/
 
   return (
     <main>

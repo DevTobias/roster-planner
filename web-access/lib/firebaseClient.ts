@@ -1,6 +1,5 @@
 import toast from 'react-hot-toast';
 import Router from 'next/router';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import {
   doc,
@@ -45,10 +44,18 @@ export const EmptyUser = {
 export const getUsers = async () => {
   const querySnapshot = await getDocs(collection(firestore, 'user'));
 
-  return querySnapshot.docs.map((d) => ({
-    key: d.id,
-    ...d.data(),
-  }));
+  return querySnapshot.docs
+    .map((d) => {
+      const data = d.data();
+
+      if (data.firstName !== 'Master') {
+        return {
+          key: d.id,
+          ...data,
+        };
+      }
+    })
+    .filter((element) => element !== undefined);
 };
 
 /**
@@ -77,19 +84,33 @@ export const deleteUser = async (uid: string) => {
  * @returns     True if the user got created, false instead.
  */
 export const createUser = async (user: User) => {
-  const { email, hours, position, firstName, lastName } = user;
+  let { email } = user;
+  const { hours, position, firstName, lastName } = user;
+
+  // If no email was provided, create one from the names
+  if (!email) {
+    email = emailFromName(firstName, lastName);
+  }
 
   try {
-    // Register the user in firebase auth
-    const { user: created } = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      passwordFromName(firstName, lastName)
-    );
+    // Register the user in firebase auth. It uses a api end point, so that
+    // the register function does not override current user auth context.
+    const res = await fetch('/api/createUser', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password: passwordFromName(firstName, lastName),
+      }),
+    });
+
+    const { uid } = await res.json();
 
     // Save the created user with its uid to firestore with the rest
     // of the data
-    await setDoc(doc(firestore, 'user', created.uid), {
+    await setDoc(doc(firestore, 'user', uid), {
       hours,
       position,
       email,
