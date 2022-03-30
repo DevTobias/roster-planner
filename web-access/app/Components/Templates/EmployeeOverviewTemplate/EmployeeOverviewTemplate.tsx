@@ -1,14 +1,18 @@
 import { FunctionComponent } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import EditableTable from '@Modules/EditableTable/EditableTable';
 import { compareString } from '@Utils/strings';
 import { EmptyUser, User, persistUser, deleteUser } from '@Lib/firebaseClient';
+import { auth } from '@Lib/firebase';
 
 import { EmployeeOverviewTemplateProps } from './EmployeeOverviewTemplate.types';
 
 const EmployeeOverviewTemplate: FunctionComponent<
   EmployeeOverviewTemplateProps
 > = ({ users }) => {
+  const [user] = useAuthState(auth);
+
   const cols = [
     {
       title: 'Name',
@@ -25,14 +29,6 @@ const EmployeeOverviewTemplate: FunctionComponent<
       editable: true,
       defaultSortOrder: 'ascend',
       sorter: (a: User, b: User) => compareString(a.lastName, b.lastName),
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      width: '250px',
-      editable: true,
-      defaultSortOrder: 'ascend',
-      sorter: (a: User, b: User) => compareString(a.email, b.email),
     },
     {
       title: 'Stunden',
@@ -53,6 +49,7 @@ const EmployeeOverviewTemplate: FunctionComponent<
   return (
     <main className="px-5 py-20 min-h-screenInner flexable justify-center">
       <EditableTable
+        adminView={user !== null}
         originData={users}
         columns={cols}
         updateCallback={persistUser}

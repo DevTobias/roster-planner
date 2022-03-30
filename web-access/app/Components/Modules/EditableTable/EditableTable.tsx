@@ -46,6 +46,7 @@ const EditableTable = <T extends BaseData>({
   originData,
   title,
   empty,
+  adminView,
   columns: originColumns,
   updateCallback,
   deleteCallback,
@@ -146,24 +147,11 @@ const EditableTable = <T extends BaseData>({
     setEditingKey('');
   };
 
-  const columns = [
-    ...originColumns.map((col) => {
-      if (!col.editable) {
-        return col;
-      }
-
-      return {
-        ...col,
-        onCell: (record: T) => ({
-          record,
-          inputType: 'text',
-          dataIndex: col.dataIndex,
-          title: col.title,
-          editing: isEditing(record),
-        }),
-      };
-    }),
-    {
+  /**
+   * @returns Returns the admin control buttons (delete, edit).
+   */
+  const getAdminButtons = () => {
+    return {
       dataIndex: 'operation',
       render: (_: undefined, record: T) => {
         const editable = isEditing(record);
@@ -204,7 +192,27 @@ const EditableTable = <T extends BaseData>({
           </span>
         );
       },
-    },
+    };
+  };
+
+  const columns = [
+    ...originColumns.map((col) => {
+      if (!col.editable) {
+        return col;
+      }
+
+      return {
+        ...col,
+        onCell: (record: T) => ({
+          record,
+          inputType: 'text',
+          dataIndex: col.dataIndex,
+          title: col.title,
+          editing: isEditing(record),
+        }),
+      };
+    }),
+    ...(adminView ? [getAdminButtons()] : []),
   ];
 
   return (
@@ -213,13 +221,15 @@ const EditableTable = <T extends BaseData>({
         <h2 className="text-neutral-800 font-semibold text-header3m">
           {title}
         </h2>
-        <Button
-          style={{ border: 'none', marginBottom: 10 }}
-          type="primary"
-          shape="circle"
-          icon={<PlusOutlined />}
-          onClick={addItem}
-        />
+        {adminView && (
+          <Button
+            style={{ border: 'none', marginBottom: 10 }}
+            type="primary"
+            shape="circle"
+            icon={<PlusOutlined />}
+            onClick={addItem}
+          />
+        )}
       </div>
 
       <Table

@@ -6,6 +6,7 @@ export interface EditableTableProps<T> {
   originData: T[];
   title: string;
   empty: T;
+  adminView: boolean;
   columns: {
     title: string;
     dataIndex: string;
