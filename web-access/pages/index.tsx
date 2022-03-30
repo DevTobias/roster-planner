@@ -2,14 +2,15 @@ import type { NextPage } from 'next';
 
 import Title from '@Helpers/Title';
 import Container from '@Layouts/Container';
+import HomeTemplate from '@Templates/HomeTemplate';
 
 const Index: NextPage = () => {
   return (
     <>
-      <Title title="Master Dienstplan" />
+      <Title title="Dienstplan" />
 
       <Container>
-        <h1 className="text-header3 text-center">Web access</h1>
+        <HomeTemplate />
       </Container>
     </>
   );

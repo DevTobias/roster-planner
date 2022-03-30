@@ -1,5 +1,7 @@
 import toast from 'react-hot-toast';
+import Router from 'next/router';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 import {
   doc,
   deleteDoc,
@@ -10,7 +12,12 @@ import {
 } from 'firebase/firestore';
 
 import { auth, firestore } from '@Lib/firebase';
-import { passwordFromName } from '@Utils/strings';
+import { emailFromName, passwordFromName } from '@Utils/strings';
+
+export type Credentials = {
+  username: string;
+  password: string;
+};
 
 export type User = {
   key: string;
@@ -136,4 +143,21 @@ export const persistUser = async (user: User) => {
   }
 
   return updateUser(user);
+};
+
+export const signIn = async (
+  { username, password }: Credentials,
+  redirect: string
+) => {
+  try {
+    const [firstName, lastName] = username.split(' ');
+    await signInWithEmailAndPassword(
+      auth,
+      emailFromName(firstName, lastName),
+      password
+    );
+    Router.push(redirect);
+  } catch (e) {
+    toast.error('Kein Nutzer mit diesen Daten gefunden.');
+  }
 };
