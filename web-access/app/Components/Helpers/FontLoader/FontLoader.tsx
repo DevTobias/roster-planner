@@ -1,5 +1,9 @@
 import { FunctionComponent } from 'react';
 
+/**
+ * Loads poppins and inter font variant by providing multiple
+ * links to the self hosted fonts.
+ */
 const FontLoader: FunctionComponent = () => {
   const fonts = [
     '/fonts/Poppins-RegularItalic.woff2',

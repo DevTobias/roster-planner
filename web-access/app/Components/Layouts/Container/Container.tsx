@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 /**
- * Container component with min screen height.
+ * Container component with 100 min screen height.
  */
 const Container: FunctionComponent = ({ children }) => {
   return (

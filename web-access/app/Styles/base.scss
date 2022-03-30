@@ -24,3 +24,7 @@ body,
 svg * {
   transform-box: fill-box;
 }
+
+.ant-table-selection-column {
+  padding: 0 !important;
+}

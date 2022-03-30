@@ -4,14 +4,16 @@ export interface BaseData {
 
 export interface EditableTableProps<T> {
   originData: T[];
+  title: string;
+  empty: T;
   columns: {
     title: string;
     dataIndex: string;
     width: string;
     editable: boolean;
   }[];
-  updateCallback: (item: T) => void;
-  deleteCallback: (key: string) => void;
+  updateCallback: (item: T) => Promise<boolean>;
+  deleteCallback: (key: string) => Promise<boolean>;
 }
 
 export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {

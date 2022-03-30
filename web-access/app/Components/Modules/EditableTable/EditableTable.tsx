@@ -1,13 +1,18 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Table, Input, InputNumber, Form, Button } from 'antd';
+import { Table, Input, Form, Button } from 'antd';
 import {
   CloseOutlined,
   EditFilled,
   SaveFilled,
   DeleteFilled,
+  PlusOutlined,
 } from '@ant-design/icons';
 
-import { BaseData, EditableTableProps, EditableCellProps } from './Table.types';
+import {
+  BaseData,
+  EditableTableProps,
+  EditableCellProps,
+} from './EditableTable.types';
 
 /**
  * Override the table cell based on its editable state.
@@ -21,13 +26,11 @@ const EditableCell: FunctionComponent<EditableCellProps> = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-
   if (editing) {
     return (
       <td {...restProps}>
         <Form.Item name={dataIndex} style={{ margin: 0 }}>
-          {inputNode}
+          <Input bordered={false} style={{ padding: 0 }} />
         </Form.Item>
       </td>
     );
@@ -41,6 +44,8 @@ const EditableCell: FunctionComponent<EditableCellProps> = ({
  */
 const EditableTable = <T extends BaseData>({
   originData,
+  title,
+  empty,
   columns: originColumns,
   updateCallback,
   deleteCallback,
@@ -57,13 +62,6 @@ const EditableTable = <T extends BaseData>({
   const edit = (record: Partial<T> & { key: React.Key }) => {
     form.setFieldsValue(record);
     setEditingKey(record.key);
-  };
-
-  /**
-   * Cancels the current editing of a row.
-   */
-  const cancel = () => {
-    setEditingKey('');
   };
 
   /**
@@ -84,7 +82,9 @@ const EditableTable = <T extends BaseData>({
         ...row,
       });
 
-      updateCallback(newData[index]);
+      // Persist the change in the database and stop if an error occurred
+      const worked = await updateCallback(newData[index]);
+      if (!worked) return;
 
       // Safe the new data in state to render it
       setData(newData);
@@ -105,10 +105,45 @@ const EditableTable = <T extends BaseData>({
     // Delete the user from the array
     newData.splice(index, 1);
 
-    deleteCallback(key);
+    // Persist the change in the database and stop if an error occurred
+    // If the key is -1, it just deletes an empty row, so no need for firebase op
+    if (key !== '-1') {
+      const worked = await deleteCallback(key);
+      if (!worked) return;
+    }
 
     // Safe the new data in state to render it
     setData(newData);
+  };
+
+  /**
+   * Appends am empty row to the end of the table and sets the
+   * edit mode to it.
+   */
+  const addItem = async () => {
+    // If already added an empty row, dont add another one
+    if (editingKey == '-1') return;
+
+    const newData = [...data];
+
+    // Add the empty row to the end and set its key to -1, to identify
+    // it as empty row
+    newData.push(empty);
+    setEditingKey('-1');
+
+    setData(newData);
+  };
+
+  /**
+   * Cancels the current editing of a row.
+   */
+  const cancel = () => {
+    // If an empty row is getting canceled, just delete it instantly
+    if (editingKey === '-1') {
+      deleteItem('-1');
+    }
+
+    setEditingKey('');
   };
 
   const columns = [
@@ -116,11 +151,12 @@ const EditableTable = <T extends BaseData>({
       if (!col.editable) {
         return col;
       }
+
       return {
         ...col,
         onCell: (record: T) => ({
           record,
-          inputType: col.dataIndex === 'age' ? 'number' : 'text',
+          inputType: 'text',
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),
@@ -131,22 +167,27 @@ const EditableTable = <T extends BaseData>({
       dataIndex: 'operation',
       render: (_: undefined, record: T) => {
         const editable = isEditing(record);
-        return editable ? (
-          <span className="space-x-2">
-            <Button
-              style={{ border: 'none' }}
-              shape="circle"
-              icon={<SaveFilled />}
-              onClick={() => save(record.key)}
-            />
-            <Button
-              style={{ border: 'none' }}
-              shape="circle"
-              icon={<CloseOutlined />}
-              onClick={cancel}
-            />
-          </span>
-        ) : (
+
+        if (editable) {
+          return (
+            <span className="space-x-2">
+              <Button
+                style={{ border: 'none' }}
+                shape="circle"
+                icon={<SaveFilled />}
+                onClick={() => save(record.key)}
+              />
+              <Button
+                style={{ border: 'none' }}
+                shape="circle"
+                icon={<CloseOutlined />}
+                onClick={cancel}
+              />
+            </span>
+          );
+        }
+
+        return (
           <span className="space-x-2">
             <Button
               style={{ border: 'none' }}
@@ -168,7 +209,26 @@ const EditableTable = <T extends BaseData>({
 
   return (
     <Form form={form} component={false}>
+      <div className="flex items-center space-x-6">
+        <h2 className="text-neutral-800 font-semibold text-header3m">
+          {title}
+        </h2>
+        <Button
+          style={{ border: 'none', marginBottom: 10 }}
+          type="primary"
+          shape="circle"
+          icon={<PlusOutlined />}
+          onClick={addItem}
+        />
+      </div>
+
       <Table
+        rowSelection={{
+          selectedRowKeys: [editingKey],
+          hideSelectAll: true,
+          columnWidth: '1px',
+          renderCell: () => <></>,
+        }}
         components={{
           body: {
             cell: EditableCell,
