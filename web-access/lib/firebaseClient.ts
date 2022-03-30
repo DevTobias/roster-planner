@@ -145,6 +145,13 @@ export const persistUser = async (user: User) => {
   return updateUser(user);
 };
 
+/**
+ * Signs in the user with given credentials. After successful sign in,
+ * he gets redirected to the provided url.
+ *
+ * @param credentials The credentials of the user.
+ * @param redirect    The url where the user should get redirected after sign in.
+ */
 export const signIn = async (
   { username, password }: Credentials,
   redirect: string
