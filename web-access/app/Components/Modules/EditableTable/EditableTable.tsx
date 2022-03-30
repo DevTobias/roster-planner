@@ -50,6 +50,7 @@ const EditableTable = <T extends BaseData>({
   columns: originColumns,
   updateCallback,
   deleteCallback,
+  border = false,
 }: EditableTableProps<T>) => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
@@ -247,11 +248,12 @@ const EditableTable = <T extends BaseData>({
             cell: EditableCell,
           },
         }}
+        bordered={border}
         dataSource={data}
         columns={columns}
         pagination={{
           onChange: cancel,
-          defaultPageSize: 7,
+          defaultPageSize: 8,
         }}
       />
     </Form>

@@ -7,11 +7,13 @@ export interface EditableTableProps<T> {
   title: string;
   empty: T;
   adminView: boolean;
+  border?: boolean;
   columns: {
-    title: string;
+    title?: string;
     dataIndex: string;
-    width: string;
-    editable: boolean;
+    width?: string;
+    editable?: boolean;
+    onCell?: (record: T, index: number) => object;
   }[];
   updateCallback: (item: T) => Promise<string>;
   deleteCallback: (key: string) => Promise<boolean>;
