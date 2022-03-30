@@ -13,7 +13,7 @@ export interface EditableTableProps<T> {
     width: string;
     editable: boolean;
   }[];
-  updateCallback: (item: T) => Promise<boolean>;
+  updateCallback: (item: T) => Promise<string>;
   deleteCallback: (key: string) => Promise<boolean>;
 }
 

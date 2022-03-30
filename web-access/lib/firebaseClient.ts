@@ -119,10 +119,10 @@ export const createUser = async (user: User) => {
     });
 
     toast.success('Mitarbeiter erfolgreich registriert.');
-    return true;
+    return uid;
   } catch (e) {
     toast.error('Mitarbeiter konnte nicht registriert werden.');
-    return false;
+    return '';
   }
 };
 
@@ -144,10 +144,10 @@ export const updateUser = async (user: User) => {
     });
 
     toast.success('Mitarbeiterdaten erfolgreich aktualisiert.');
-    return true;
+    return key;
   } catch (e) {
     toast.error('Mitarbeiterdaten konnten nicht gespeichert werden.');
-    return false;
+    return '';
   }
 };
 

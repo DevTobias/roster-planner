@@ -5,10 +5,6 @@
  * @returns   The return value is a string that is either '1', '0', or '-1'.
  */
 export const compareString = (a: string, b: string) => {
-  // If a string is empty, push it to the back in sorting hierarchy
-  if (a === '') return 1;
-  if (b === '') return -1;
-
   return a > b ? '1' : a === b ? '0' : '-1';
 };
 

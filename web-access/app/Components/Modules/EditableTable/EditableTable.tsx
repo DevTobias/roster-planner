@@ -30,7 +30,7 @@ const EditableCell: FunctionComponent<EditableCellProps> = ({
     return (
       <td {...restProps}>
         <Form.Item name={dataIndex} style={{ margin: 0 }}>
-          <Input bordered={false} style={{ padding: 0 }} />
+          <Input bordered={false} style={{ padding: 0 }} allowClear />
         </Form.Item>
       </td>
     );
@@ -84,8 +84,10 @@ const EditableTable = <T extends BaseData>({
       });
 
       // Persist the change in the database and stop if an error occurred
-      const worked = await updateCallback(newData[index]);
-      if (!worked) return;
+      const uid = await updateCallback(newData[index]);
+      if (!uid) return;
+
+      newData[index].key = uid;
 
       // Safe the new data in state to render it
       setData(newData);
@@ -127,12 +129,13 @@ const EditableTable = <T extends BaseData>({
 
     const newData = [...data];
 
+    const item = { ...empty };
+
     // Add the empty row to the end and set its key to -1, to identify
     // it as empty row
-    newData.push(empty);
-    setEditingKey('-1');
-
+    newData.push(item);
     setData(newData);
+    edit(item);
   };
 
   /**
