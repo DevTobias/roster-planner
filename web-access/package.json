@@ -15,8 +15,6 @@
     "lint": "npm run lint:eslint && npm run lint:stylelint",
     "lint:eslint": "next lint",
     "lint:stylelint": "stylelint **/*.scss --ignore-path .gitignore",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
     "analyze": "cross-env ANALYZE=true npm run build",
     "clean:build": "npx rimraf .next coverage",
     "clean:full": "npx rimraf .next node_modules coverage"
