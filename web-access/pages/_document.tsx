@@ -8,6 +8,7 @@ class CustomDocument extends Document {
       <Html lang="de">
         <Head>
           <FontLoader />
+          <meta name="viewport" content="width=1024"></meta>
         </Head>
 
         <body>
