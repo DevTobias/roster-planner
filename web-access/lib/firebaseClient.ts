@@ -191,7 +191,10 @@ export const signIn = async (
 export const getRosterData = async (weekId: string) => {
   const rosterData = [];
 
-  const users: User[] = (await getUsers()) as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const users: User[] = ((await getUsers()) as any).sort(
+    (a: User, b: User) => a.index - b.index
+  );
 
   for (const user of users) {
     const { firstName, lastName, key, position, hours } = user;
@@ -200,14 +203,17 @@ export const getRosterData = async (weekId: string) => {
       collection(firestore, `rosters/${weekId}/${user.key}`)
     );
 
+    const details =
+      firstName + ' ' + lastName + '-' + position + ', ' + hours + 'h';
+
     if (querySnapshot.docs.length === 0) {
       rosterData.push({
         key: key + '-times',
-        details: firstName + ' ' + lastName,
+        details,
       });
       rosterData.push({
         key: key + '-notes',
-        details: position + ', ' + hours + 'h',
+        details,
       });
       continue;
     }
@@ -218,7 +224,7 @@ export const getRosterData = async (weekId: string) => {
 
     rosterData.push({
       key: key + '-times',
-      details: firstName + ' ' + lastName,
+      details,
       balanceOld: '',
       vacationOld: '',
       monday: times.monday,
@@ -232,7 +238,7 @@ export const getRosterData = async (weekId: string) => {
 
     rosterData.push({
       key: key + '-notes',
-      details: position + ', ' + hours + 'h',
+      details,
       balanceOld: '-0.3',
       vacationOld: '30',
       monday: notes.monday,

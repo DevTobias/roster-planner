@@ -260,8 +260,9 @@ const EditableTable = <T extends BaseData>({
         columns={columns}
         pagination={{
           onChange: cancel,
-          defaultPageSize: 8,
+          defaultPageSize: 20,
         }}
+        size="small"
       />
     </Form>
   );

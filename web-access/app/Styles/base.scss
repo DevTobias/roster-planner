@@ -25,6 +25,12 @@ svg * {
   transform-box: fill-box;
 }
 
+.ant-table-cell {
+  padding: 0 0 0 4px !important;
+}
+
 .ant-table-selection-column {
   padding: 0 !important;
+  width: 0 !important;
+  min-width: 0 !important;
 }
