@@ -1,3 +1,4 @@
+import 'moment/locale/de';
 import { FunctionComponent, useState } from 'react';
 import { DatePicker, ConfigProvider } from 'antd';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -151,7 +152,9 @@ const RosterTemplate: FunctionComponent<RosterTemplateProps> = ({
     <main className="px-5 py-20 min-h-screenInner flexable justify-center">
       <div className="flex justify-between">
         <h2 className="text-neutral-800 font-semibold text-header3m m-0">
-          Dienstplan
+          Dienstplan (KW {date.week()} vom{' '}
+          {date.locale('de').startOf('week').format('Do Mo YY')} -{' '}
+          {date.locale('de').endOf('week').format('Do Mo YY')})
         </h2>
         <ConfigProvider locale={locale}>
           <DatePicker

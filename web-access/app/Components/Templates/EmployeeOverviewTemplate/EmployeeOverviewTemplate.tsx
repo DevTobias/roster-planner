@@ -15,11 +15,17 @@ const EmployeeOverviewTemplate: FunctionComponent<
 
   const cols = [
     {
+      dataIndex: 'index',
+      width: '30px',
+      defaultSortOrder: 'ascend',
+      editable: true,
+      sorter: (a: User, b: User) => a.index - b.index,
+    },
+    {
       title: 'Name',
       dataIndex: 'firstName',
       width: '100px',
       editable: true,
-      defaultSortOrder: 'ascend',
       sorter: (a: User, b: User) => compareString(a.firstName, b.firstName),
     },
     {
@@ -27,7 +33,6 @@ const EmployeeOverviewTemplate: FunctionComponent<
       dataIndex: 'lastName',
       width: '100px',
       editable: true,
-      defaultSortOrder: 'ascend',
       sorter: (a: User, b: User) => compareString(a.lastName, b.lastName),
     },
     {
@@ -56,6 +61,7 @@ const EmployeeOverviewTemplate: FunctionComponent<
         deleteCallback={deleteUser}
         title="Mitarbeiterübersicht"
         empty={EmptyUser}
+        hasAddButton
       />
     </main>
   );

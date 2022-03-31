@@ -12,7 +12,6 @@ import {
 
 import { auth, firestore } from '@Lib/firebase';
 import { emailFromName, passwordFromName } from '@Utils/strings';
-import moment from 'moment';
 
 export type Credentials = {
   username: string;
@@ -20,6 +19,7 @@ export type Credentials = {
 };
 
 export type User = {
+  index: number;
   key: string;
   email: string;
   hours: string;
@@ -29,6 +29,7 @@ export type User = {
 };
 
 export const EmptyUser = {
+  index: 0,
   key: '-1',
   email: '',
   hours: '',
@@ -135,14 +136,10 @@ export const createUser = async (user: User) => {
  * @returns    True if the user got updated, false instead.
  */
 export const updateUser = async (user: User) => {
-  const { key, email, hours, position } = user;
+  const { key } = user;
 
   try {
-    await updateDoc(doc(firestore, 'user', key), {
-      email,
-      position,
-      hours,
-    });
+    await updateDoc(doc(firestore, 'user', key), user);
 
     toast.success('Mitarbeiterdaten erfolgreich aktualisiert.');
     return key;

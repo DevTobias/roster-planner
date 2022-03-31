@@ -30,7 +30,7 @@ const EditableCell: FunctionComponent<EditableCellProps> = ({
     return (
       <td {...restProps}>
         <Form.Item name={dataIndex} style={{ margin: 0 }}>
-          <Input bordered={false} style={{ padding: 0 }} allowClear />
+          <Input bordered={false} style={{ padding: 0 }} />
         </Form.Item>
       </td>
     );
