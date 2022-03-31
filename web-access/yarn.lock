@@ -6545,6 +6545,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/preact-ssr-prepass/-/preact-ssr-prepass-1.2.0.tgz#f9c0545f18117971dcc6a09dbc3014067acce583"
   integrity sha512-UKz6FB2+KepjHQ6aGqiTUMZfGgdoTunxtByczdUNho9UvSRTJw31Np9J+wUSAlJ1kALJGX1BpcBLvO3iohQUSA==
 
+react-uid@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-uid/-/react-uid-2.3.1.tgz#22a75d4a948a4824b9b8078cbf864d55d91ca4be"
+  integrity sha512-6C5pwNYP1udgp5feQ9MTBZBKD4su9nhD2aYCFY1bB0Bpask8wYKYz0ZhAtAJ4lcmTDC5kY1ByGTQMFDHQW6p0w==
+  dependencies:
+    tslib "^1.10.0"
+
 read-pkg-up@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-7.0.1.tgz#f3a6135758459733ae2b95638056e1854e7ef507"
@@ -7481,7 +7488,7 @@ tsconfig-paths@^3.12.0, tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@^1.8.1:
+tslib@^1.10.0, tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==

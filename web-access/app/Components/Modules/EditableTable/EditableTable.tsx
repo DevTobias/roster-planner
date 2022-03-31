@@ -51,6 +51,8 @@ const EditableTable = <T extends BaseData>({
   updateCallback,
   deleteCallback,
   border = false,
+  hasAddButton = false,
+  updateMiddleware,
 }: EditableTableProps<T>) => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
@@ -72,11 +74,13 @@ const EditableTable = <T extends BaseData>({
   const save = async (key: React.Key) => {
     try {
       // Validate the form data and throw error if failed
-      const row = (await form.validateFields()) as T;
+      let row = (await form.validateFields()) as T;
 
       // Make a copy of the data and find the edited row
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
+
+      if (updateMiddleware) row = updateMiddleware(row);
 
       // Override the old row data
       newData.splice(index, 1, {
@@ -85,10 +89,11 @@ const EditableTable = <T extends BaseData>({
       });
 
       // Persist the change in the database and stop if an error occurred
-      const uid = await updateCallback(newData[index]);
-      if (!uid) return;
-
-      newData[index].key = uid;
+      if (updateCallback) {
+        const uid = await updateCallback(newData[index]);
+        if (!uid) return;
+        newData[index].key = uid;
+      }
 
       // Safe the new data in state to render it
       setData(newData);
@@ -111,7 +116,7 @@ const EditableTable = <T extends BaseData>({
 
     // Persist the change in the database and stop if an error occurred
     // If the key is -1, it just deletes an empty row, so no need for firebase op
-    if (key !== '-1') {
+    if (key !== '-1' && deleteCallback) {
       const worked = await deleteCallback(key);
       if (!worked) return;
     }
@@ -221,13 +226,15 @@ const EditableTable = <T extends BaseData>({
 
   return (
     <Form form={form} component={false}>
-      <div className="flex items-center space-x-6">
-        <h2 className="text-neutral-800 font-semibold text-header3m">
-          {title}
-        </h2>
-        {adminView && (
+      <div className="flex items-center space-x-6 mb-2">
+        {title && (
+          <h2 className="text-neutral-800 font-semibold text-header3m m-0">
+            {title}
+          </h2>
+        )}
+        {adminView && hasAddButton && (
           <Button
-            style={{ border: 'none', marginBottom: 10 }}
+            style={{ border: 'none' }}
             type="primary"
             shape="circle"
             icon={<PlusOutlined />}

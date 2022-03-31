@@ -46,3 +46,20 @@ export const passwordFromName = (firstName: string, lastName: string) => {
 export const emailFromName = (firstName: string, lastName: string) => {
   return `${prepareString(firstName)}.${prepareString(lastName)}@kita.de`;
 };
+
+export const createTimeDif = (time: string) => {
+  if (time.split('-').length === 1) {
+    return time;
+  }
+
+  const [first, second] = time.split('-');
+  const secondParsed = second.split('(');
+
+  // No difference is set
+  if (secondParsed.length === 1) {
+    const dif = Math.abs(parseFloat(first) - parseFloat(second));
+    time += ` (${dif})`;
+  }
+
+  return time;
+};
