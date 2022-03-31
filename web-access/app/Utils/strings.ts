@@ -47,6 +47,14 @@ export const emailFromName = (firstName: string, lastName: string) => {
   return `${prepareString(firstName)}.${prepareString(lastName)}@kita.de`;
 };
 
+const timeDif = (first: number, second: number) => {
+  const dif = Math.abs(first - second);
+  const absTime = Math.round(dif);
+  const decimalTime = dif - absTime;
+
+  return Math.round(10 * (absTime + decimalTime / 0.6)) / 10;
+};
+
 export const createTimeDif = (time: string) => {
   if (time.split('-').length === 1) {
     return time;
@@ -57,8 +65,12 @@ export const createTimeDif = (time: string) => {
 
   // No difference is set
   if (secondParsed.length === 1) {
-    const dif = Math.abs(parseFloat(first) - parseFloat(second));
-    time += ` (${dif})`;
+    time += ` (${timeDif(parseFloat(first), parseFloat(second))})`;
+  } else {
+    time = `${first}-${secondParsed[0]} (${timeDif(
+      parseFloat(first),
+      parseFloat(secondParsed[0])
+    )})`;
   }
 
   return time;

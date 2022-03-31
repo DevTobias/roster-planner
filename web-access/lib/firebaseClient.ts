@@ -204,7 +204,7 @@ export const getRosterData = async (weekId: string) => {
     );
 
     const details =
-      firstName + ' ' + lastName + '-' + position + ', ' + hours + 'h';
+      firstName + ' ' + lastName + '#' + position + ', ' + hours + 'h';
 
     if (querySnapshot.docs.length === 0) {
       rosterData.push({

@@ -28,8 +28,8 @@ const RosterTemplate: FunctionComponent<RosterTemplateProps> = ({
       onCell: (_: unknown, index: number) => ({
         rowSpan: index % 2 == 0 ? 2 : 0,
       }),
-      render: (text) => {
-        const [first, second] = text.split('-');
+      render: (text: string) => {
+        const [first, second] = text.split('#');
         return (
           <>
             {first}

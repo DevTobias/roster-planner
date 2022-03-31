@@ -6,11 +6,16 @@ import innerVh from '@Utils/innerVh';
 
 import '@Styles/base.scss';
 import 'antd/dist/antd.css';
+import Head from 'next/head';
 
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => innerVh(), []);
   return (
     <>
+      <Head>
+        {' '}
+        <meta name="viewport" content="width=1024"></meta>
+      </Head>
       <Component {...pageProps} />{' '}
       <Toaster
         toastOptions={{
