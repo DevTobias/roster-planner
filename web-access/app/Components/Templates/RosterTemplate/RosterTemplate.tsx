@@ -43,17 +43,19 @@ const RosterTemplate: FunctionComponent<RosterTemplateProps> = ({
       title: '+/-',
       dataIndex: 'balanceOld',
       width: '75px',
-      onCell: (_: unknown, index: number) => ({
-        rowSpan: index % 2 == 0 ? 2 : 0,
-      }),
+      editable: true,
+      //onCell: (_: unknown, index: number) => ({
+      //  rowSpan: index % 2 == 0 ? 2 : 0,
+      //}),
     },
     {
       title: 'Urlaub',
       dataIndex: 'vacationOld',
       width: '75px',
-      onCell: (_: unknown, index: number) => ({
-        rowSpan: index % 2 == 0 ? 2 : 0,
-      }),
+      editable: true,
+      //onCell: (_: unknown, index: number) => ({
+      //  rowSpan: index % 2 == 0 ? 2 : 0,
+      //}),
     },
     {
       title: 'Montag',
@@ -89,30 +91,45 @@ const RosterTemplate: FunctionComponent<RosterTemplateProps> = ({
       title: '+/-',
       dataIndex: 'balanceNew',
       width: '75px',
-      onCell: (_: unknown, index: number) => ({
-        rowSpan: index % 2 == 0 ? 2 : 0,
-      }),
+      editable: true,
+      //onCell: (_: unknown, index: number) => ({
+      //  rowSpan: index % 2 == 0 ? 2 : 0,
+      //}),
     },
     {
       title: 'Urlaub',
       dataIndex: 'vacationNew',
       width: '75px',
-      onCell: (_: unknown, index: number) => ({
-        rowSpan: index % 2 == 0 ? 2 : 0,
-      }),
+      editable: true,
+      //onCell: (_: unknown, index: number) => ({
+      //  rowSpan: index % 2 == 0 ? 2 : 0,
+      //}),
     },
   ];
 
   const updateRoster = async (roster: RosterEntry) => {
-    const { key, monday, tuesday, wednesday, thursday, friday } = roster;
+    const {
+      key,
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      balanceNew,
+      balanceOld,
+      vacationNew,
+      vacationOld,
+    } = roster;
     const [uid, row] = key.split('-');
 
     const rosterId = `kw${moment().week()}_${moment().year()}`;
 
     try {
       await setDoc(doc(firestore, `rosters/${rosterId}/${uid}/meta`), {
-        balance: '',
-        vacation: '',
+        balanceOld: balanceOld,
+        vacationOld: vacationOld,
+        balance: balanceNew,
+        vacation: vacationNew,
       });
 
       await setDoc(doc(firestore, `rosters/${rosterId}/${uid}/notes`), {

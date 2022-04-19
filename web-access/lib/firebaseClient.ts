@@ -225,8 +225,8 @@ export const getRosterData = async (weekId: string) => {
     rosterData.push({
       key: key + '-times',
       details,
-      balanceOld: '',
-      vacationOld: '',
+      balanceOld: meta.balanceOld,
+      vacationOld: meta.vacationOld,
       monday: times.monday,
       tuesday: times.tuesday,
       wednesday: times.wednesday,
@@ -239,15 +239,15 @@ export const getRosterData = async (weekId: string) => {
     rosterData.push({
       key: key + '-notes',
       details,
-      balanceOld: '-0.3',
-      vacationOld: '30',
+      balanceOld: '',
+      vacationOld: '',
       monday: notes.monday,
       tuesday: notes.tuesday,
       wednesday: notes.wednesday,
       thursday: notes.thursday,
       friday: notes.friday,
-      balanceNew: meta.balance,
-      vacationNew: meta.vacation,
+      balanceNew: '',
+      vacationNew: '',
     });
   }
 
