@@ -20,6 +20,7 @@ dependencies:
   firebase_messaging: ^11.2.7
 
   # UI dependencies
+  webview_flutter: ^3.0.2
   calendar_timeline: ^1.0.4
   splashscreen:
     git:

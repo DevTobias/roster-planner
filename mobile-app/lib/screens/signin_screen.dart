@@ -44,13 +44,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
-                      labelText: 'Email Address',
+                      labelText: 'Benutzername',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       prefixIcon: Icon(Icons.email),
                     ),
-                    validator: _validateEmail,
+                    validator: _validateName,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -90,9 +90,18 @@ class _SignInScreenState extends State<SignInScreen> {
   /// from firebase.
   Future<void> _logIn() async {
     try {
+      final List<String> split = _emailController.text
+          .toLowerCase()
+          .replaceAll('ä', 'ae')
+          .replaceAll('ü', 'ue')
+          .replaceAll('ö', 'oe')
+          .split(' ');
+
+      final String generatedMail = '${split[0]}.${split[1]}@kita.de';
+
       final UserCredential result =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
+        email: generatedMail,
         password: _passwordController.text,
       );
 
@@ -120,15 +129,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   /// Validate if the [value] is a valid email or not. If an error occurred,
   /// a error message as string is returned, null instead.
-  String? _validateEmail(String? value) {
+  String? _validateName(String? value) {
     if (value!.isEmpty) {
-      return 'Bitte eine Email eingeben!';
-    }
-
-    if (!RegExp(
-            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-        .hasMatch(value)) {
-      return 'Bitte eine gültige Email eingeben!';
+      return 'Bitte einen Namen eingeben!';
     }
 
     return null;

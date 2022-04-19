@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../components/layouts/default_layout.dart';
 
@@ -33,13 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
         _saveDeviceToken(token);
       }
     });
+
+    // Enable virtual display.
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: DefaultLayout(
+  /*DefaultLayout(
         child: Column(
           children: <Widget>[
             const SizedBox(height: 20),
@@ -55,20 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),*/
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      extendBody: true,
+      body: DefaultLayout(
+        child: WebView(
+          initialUrl: 'http://192.168.178.25:3000/rosters',
+          javascriptMode: JavascriptMode.unrestricted,
+        ),
       ),
     );
   }
 
-  void _handleDateSelect(DateTime date) {}
+  //void _handleDateSelect(DateTime date) {}
 
   /// Safe an device [token] from firebase messing
   Future<void> _saveDeviceToken(String token) async {
     // Create a unique token document for the authenticated user
-    final DocumentReference<Map<String, dynamic>> tokens = _db
-        .collection('users')
-        .doc(widget._uid)
-        .collection('tokens')
-        .doc(token);
+    final DocumentReference<Map<String, dynamic>> tokens =
+        _db.collection('user').doc(widget._uid).collection('tokens').doc(token);
 
     // Safe the token with some corresponding meta data
     final Map<String, Object> tokenData = <String, Object>{
