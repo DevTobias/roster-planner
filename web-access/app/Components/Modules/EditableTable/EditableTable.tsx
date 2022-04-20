@@ -28,7 +28,7 @@ const EditableCell: FunctionComponent<EditableCellProps> = ({
 }) => {
   if (editing) {
     return (
-      <td {...restProps} rowSpan={restProps.rowSpan}>
+      <td {...restProps}>
         <Form.Item name={dataIndex} style={{ margin: 0 }}>
           <Input bordered={false} style={{ padding: 0 }} />
         </Form.Item>

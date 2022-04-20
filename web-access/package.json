@@ -17,7 +17,8 @@
     "lint:stylelint": "stylelint **/*.scss --ignore-path .gitignore",
     "analyze": "cross-env ANALYZE=true npm run build",
     "clean:build": "npx rimraf .next coverage",
-    "clean:full": "npx rimraf .next node_modules coverage"
+    "clean:full": "npx rimraf .next node_modules coverage",
+    "types": "tsc"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
